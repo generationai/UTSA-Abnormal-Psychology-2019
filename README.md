@@ -30,9 +30,3 @@ This lesson is for late undergraduate students. Students should be familiar with
 
 # Time to Teach this Lesson 
 This lesson can be taught in 3 sessions along with TA assistance in running models in R
-
-First Week: 1-hour prep, 2-hour class session; MRSI-28 dataset; hypothesis testing; review of Statistics
-
-Second Week: 1-hour class session to review decision trees; guided work running models in R
-
-Third Week:  Review visualizations; summarize hypothesis; directions for incorporating work into final projects
