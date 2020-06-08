@@ -16,7 +16,7 @@ header-includes:
  - \setlength{\parskip}{4pt}
 ---
 \newpage
-#Setting up your environment:
+# Setting up your environment:
 To perform the analysis without "reinventing the wheel", we will use pre-written code in R _packages_. To use a package, it must be _installed_ once and then _loaded_ into your workspace when you intend to use it.
 \newline
 \newline
@@ -62,7 +62,7 @@ knitr::opts_chunk$set(error = FALSE,     # suppress errors
 
 \newpage
 
-#Data Ingest:
+# Data ingest:
 The first step of any data analysis is to properly ingest data of interest and store it in an appropriate way. In this case, we ingest a csv with 117 variables. To organize this data, we will split the variables into multiple data frames based on the category of the data. When splitting your data, it's important to keep a common key that can be used to join the data back together for different analyses. 
 
 
@@ -105,7 +105,7 @@ BSS <- get_df('BSS')
 
 
 \newpage
-#Data Exploration:
+# Data exploration:
 
 First, we will get an overview of each of the data frames we created above. It is important to understand what type of data you have and what it means, which may be defined in a _data dictionary_ accompanying your data set of interest. 
 
@@ -118,7 +118,7 @@ The data frames created include:
 * Beck Scale for Suicide Ideation (BSS): measure of several factors related to suicidal ideation
 * General Information Table (osb_gen): general information including ID, age, gender, race, ethnicity, combat, and service for each observation
 
-##Data Overview
+## Data Overview
 
 * Alcohol Use Disorders Test: self-report measure of problematic drinking for adults
 
@@ -157,9 +157,9 @@ head(BSS[,c(1,2,3:5,20:22)])
 
 \newpage
 
-##Data Correlation
+## Data Correlation
 
-###Exploring the relationship of risk and protective factors, regardless of combat group:
+### Exploring the relationship of risk and protective factors, regardless of combat group:
 
 What variables are closely related? What is the connection, or the correlation, between variables? These questions can be explored using correlation matrices.
 
@@ -242,7 +242,7 @@ print(paste0("r = ",round(cor(RFL$RFLtotal, BSS$BSS19_Total),4)))
 \newpage
 
 
-###Further exploring correlation of MSRI-28 Positive Self-Perception and the Reasons for Living Inventory (regardless of combat group):
+### Further exploring correlation of MSRI-28 Positive Self-Perception and the Reasons for Living Inventory (regardless of combat group):
 
 ```{r warning=FALSE, include=TRUE}
 ms1 <- MSRI[,c("Study_ID","MSRIpse")]
@@ -258,7 +258,7 @@ ggplot(data=ms_rf, aes(x=MSRIpse,y=RFLtotal))+
 
 ```
 
-###Further Granularity: Exploring the relationship of MSRI-28 Positive Self-Perception individual question responses and Reasons for Living Inventory individual question responses, regardless of combat group:
+### Further Granularity: Exploring the relationship of MSRI-28 Positive Self-Perception individual question responses and Reasons for Living Inventory individual question responses, regardless of combat group:
 
 ```{r warning=FALSE, include=TRUE}
 
@@ -288,11 +288,11 @@ corrplot::corrplot(mydata.rcorr$r, tl.cex=.5)
 
 \newpage
 
-##Hypothesis:	The correlation between RFL and MSRI Suicide Ideation will be significantly different for veterans who experienced combat from veterans who did not experience combat.
+## Hypothesis:	The correlation between RFL and MSRI Suicide Ideation will be significantly different for veterans who experienced combat from veterans who did not experience combat.
 
 Does experiencing combat affect the correlation between reasons for living and suicide ideation?
 
-###Independent Correlation Analysis: comparing the correlation of RFL with MSRI suicide ideation for combat group vs. non-combat group:
+### Independent Correlation Analysis: comparing the correlation of RFL with MSRI suicide ideation for combat group vs. non-combat group:
 
 Method: Fisher’s r to z transformation
 
@@ -372,7 +372,7 @@ Therefore we reject the null and infer that correlations are significantly diffe
 
 \newpage
 
-##Hypothesis: Veterans who have not been exposed to combat will be more likely to have a higher mean score on the MSRI-28 Family Connectedness scale than those who have been exposed to combat.
+## Hypothesis: Veterans who have not been exposed to combat will be more likely to have a higher mean score on the MSRI-28 Family Connectedness scale than those who have been exposed to combat.
 
  
 ```{r fig.width=4, fig.height=4, fig.align='center'}
@@ -417,7 +417,7 @@ kable(sumstats, "latex", booktabs=T)%>%
 
 ```
 
-###Looking for normality:
+### Looking for normality:
 ```{r fig.align='center', warning=FALSE, include=TRUE}
 #plot histogram for group 1
 p1 <- ggplot(fam_combat[fam_combat$Combat==1,], aes(x=MSRIfam))+
@@ -442,33 +442,33 @@ ggplot(fam_combat, aes(x=Combat, y=MSRIfam))+
 
 ```
 
-###T-test for mean MSRI Scores between veterans who have been exposed to combat and veterans who have not been exposed to combat:
+### T-test for mean MSRI Scores between veterans who have been exposed to combat and veterans who have not been exposed to combat:
 ```{r}
 t.test(group1_msri, group2_msri)
 ```
 
-###Conclusion:
+###  Conclusion:
 Considering a p-value of .05, we reject the null hypothesis that $\mu_1=\mu_2$ and conclude that the mean MSRI Score is significantly different for those who experienced combat from those who did not experience combat. 
 
-###_Question:_ How certain are we? Consider the p-value resulting from the t-test.
+###  _Question:_ How certain are we? Consider the p-value resulting from the t-test.
 
-###_Question:_ Was the t-test's assumption of normality met for this data? How important is this assumption? What is a non-parametric alternative?
+###  _Question:_ Was the t-test's assumption of normality met for this data? How important is this assumption? What is a non-parametric alternative?
 
 * Alternative: Mann-Whitney-Wilcoxon Test:
 
 ```{r}
 wilcox.test(group1_msri, group2_msri)
 ```
-###Conclusion from a Mann-Whitney-Wilcoxon Test:
+### Conclusion from a Mann-Whitney-Wilcoxon Test:
 We do not reject the null hypothesis that $\mu_1=\mu_2$ and conclude that the mean MSRI Family Connectedness Score is not significantly different for those who experienced combat from those who did not experience combat.
 
 
 \newpage
 
-##Hypothesis: Veterans who have been exposed to combat will be more likely to have a higher mean score for a problematic drinking scale than those who have not been exposed to combat.
+## Hypothesis: Veterans who have been exposed to combat will be more likely to have a higher mean score for a problematic drinking scale than those who have not been exposed to combat.
 
 
-###Alcohol Use Disorders Test: self-report measure of problematic drinking for adults:
+### Alcohol Use Disorders Test: self-report measure of problematic drinking for adults:
 
 ```{r fig.width=5, fig.height=5, fig.align='center'}
 #get pair plot of Audit data
@@ -523,7 +523,7 @@ ggplot(Audit2, aes(x=group, y=aud_mean))+
 ```
 
 
-###Looking for normality:
+### Looking for normality:
 ```{r fig.width=3, fig.height=3, fig.align='center', include=TRUE}
 #plot histogram for group 1
 ggplot(Audit2[Audit2$Combat==1,], aes(x=aud_mean))+
@@ -538,27 +538,27 @@ ggplot(Audit2[Audit2$Combat==2,], aes(x=aud_mean))+
 ```
 
 
-###T-test for mean AUDIT Scores between veterans who have been exposed to combat and veterans who have not been exposed to combat:
+### T-test for mean AUDIT Scores between veterans who have been exposed to combat and veterans who have not been exposed to combat:
 ```{r fig.width=5, fig.height=5, fig.align='center'}
 t.test(group1_Audit, group2_Audit)
 ```
-###Conclusion from a t-test:
+### Conclusion from a t-test:
 We reject the null hypothesis that $\mu_1=\mu_2$ and conclude that the mean AUDIT Score is significantly different for those who experienced combat from those who did not experience combat.
 
-###_Question:_ Was the t-test's assumption of normality met for this data? How important is this assumption? What is a non-parametric alternative?
+### _Question:_ Was the t-test's assumption of normality met for this data? How important is this assumption? What is a non-parametric alternative?
 
 * Alternative: Mann-Whitney-Wilcoxon Test:
 
 ```{r}
 wilcox.test(Audit2$aud_mean ~ Audit2$Combat)
 ```
-###Conclusion from a Mann-Whitney-Wilcoxon Test:
+### Conclusion from a Mann-Whitney-Wilcoxon Test:
 We reject the null hypothesis that $\mu_1=\mu_2$ and conclude that the mean AUDIT Score is significantly different for those who experienced combat from those who did not experience combat.
 
 
 
 \newpage
-#Predicting Suicide Attempts with Decision Trees:
+# Predicting suicide attempts with decision trees:
 
 **Motivation:** determining how mean MSRI-28 scores impact the likelihood of a veteran attempting suicide
 
@@ -574,7 +574,7 @@ What other relationships might exist?
 \newline
 How is the tree constructed? Decision tree algorithms can use different types of decision-making criteria to determine how to best split information for classification.
 
-##Decision-Making Criteria: Entropy and Information Gain
+## Decision-Making Criteria: Entropy and Information Gain
 In this analysis, the decisions will be based on _information gain_, which is a function of _entropy_. 
 \newline
 \newline
@@ -589,7 +589,7 @@ In this analysis, the decisions will be based on _information gain_, which is a 
 \newline
 
 
-###Example of entropy:
+### Example of entropy:
 For example, in a set $\{yes,yes,no,yes,no,no\}$, there are 3 "yes" values and 3 "no" values. The probability of drawing either is 3/6. Let's see what entropy looks like using the formula above:
 
 ```{r}
@@ -602,7 +602,7 @@ The **information gain** is the _expected reduction in entropy caused by partiti
 \newline
 \newline
 
-###Example of information gain:
+### Example of information gain:
 Let's evaluate the following data to understand information gain:
 ```{r}
 #generate example table from https://www.math.unipd.it/~aiolli/corsi/0708/IR/Lez12.pdf
@@ -658,9 +658,9 @@ information_gain1
 This gives us a sense of how much information was gained by choosing to split this data set by attribute1 as the first branch of the decision tree.
 
 
-###Example values derived from [\textcolor{blue}{F. Aiolli, Dipartimento di Matematica Pura ed Applicata Università di Padova}](https://www.math.unipd.it/~aiolli/corsi/0708/IR/Lez12.pdf)
+### Example values derived from [\textcolor{blue}{F. Aiolli, Dipartimento di Matematica Pura ed Applicata Università di Padova}](https://www.math.unipd.it/~aiolli/corsi/0708/IR/Lez12.pdf)
 
-##Choosing Decision-Making Criteria: Information Gain vs. Gini Index
+## Choosing Decision-Making Criteria: Information Gain vs. Gini Index
 In this analysis, information gain was used to create decision trees which rely on entropy as the splitting criteria. 
 
 Other options, such as the Gini Split algorithm, can be used for the same purpose. Unlike information gain, the Gini Split algorithm relies on the Gini Index. 
@@ -674,7 +674,7 @@ The results from each may differ, though one is not always better than the other
 According to learnbymarketing, the Gini Split _favors larger partitions_, while Information gain _favors partitions that have small counts but many distinct values_. To learn more about choosing decision criteria, visit [\textcolor{blue}{learnbymarketing}](http://www.learnbymarketing.com/481/decision-tree-flavors-gini-info-gain/) 
 
 \newpage
-#Predicting suicide attempts from MSRI and combat exposure
+# Predicting suicide attempts from MSRI and combat exposure
 
 Use a decision tree to classify each observation as either "suicide attempt" or "no attempt" from predictors in MSRI-28: 
 
@@ -685,7 +685,7 @@ Use a decision tree to classify each observation as either "suicide attempt" or 
 * if veteran has been exposed to combat 
 
 
-##Data Pre-Processing
+## Data Pre-Processing
 
 A large part of the data science process involves cleaning data, performing exploratory data analysis, transforming variables, and manipulating data structures.
 
@@ -709,7 +709,7 @@ One issue with the feature "Suicide Attempt" data set is missingness (NAs) or un
 
 In this case, there are very few (less than 5%) missing or unexplained suicide attempt values, so listwise deletion will be used. This means **we will completely remove any observation from the data set where Suicide_attempt is _NA_ or _99_.**
 
-##Feature Selection
+## Feature Selection
 
 Another consideration in this data set is which variables should be used as predictors. For instance, predictors could be each individual question from the MSRI, total MSRI scores for each type of factor, or mean MSRI scores for each type of factor.
 
@@ -758,7 +758,7 @@ kable(msri_head, "latex", booktabs=T)%>%
 
 \newpage
 
-##Predicting suicide attempts from MSRI mean and combat exposure:
+## Predicting suicide attempts from MSRI mean and combat exposure:
 
 ```{r fig.width=3, fig.height=3, fig.align='center', include=TRUE}
 
@@ -796,7 +796,7 @@ tree_gini.pred = predict(tree_gini, newdata=test[,-remove_columns], type='class'
 ```
 
 
-###Evaluating the prediction results
+### Evaluating the prediction results
 ```{r fig.width=3, fig.height=3, fig.align='center', include=TRUE}
 #get a confusion matrix to view the results of the information gain prediction
 x <- confusionMatrix(as.factor(test$Suicide_Attempt), as.factor(tree_ig.pred))
@@ -869,7 +869,7 @@ What if, instead of information gain, we used a different decision criteria such
 prp(tree_gini)
 ```
 \newpage 
-##Data Transformation: _total_ vs. _mean_ score results
+## Data Transformation: _total_ vs. _mean_ score results
 
 Will the results change if we used the total MSRI scores rather than the mean scores?
 
@@ -881,7 +881,7 @@ Use a decision tree to classify each observation as either "suicide attempt" or 
 * positive self-perception total score (MSRI)
 * if veteran has been exposed to combat 
 
-##Predicting suicide attempts from MSRI total and combat exposure:
+## Predicting suicide attempts from MSRI total and combat exposure:
 
 ```{r fig.width=3, fig.height=3, fig.align='center', warning=FALSE}
 
@@ -938,7 +938,7 @@ tree_gini.pred = predict(tree_gini, newdata=test[,-remove_columns], type='class'
 ```
 
 
-###Evaluating the prediction results
+### Evaluating the prediction results
 ```{r fig.width=3, fig.height=3, fig.align='center', include=TRUE}
 #get a confusion matrix to view the results of the information gain prediction
 x <- confusionMatrix(as.factor(test$Suicide_Attempt), as.factor(tree_ig.pred))
@@ -1030,7 +1030,7 @@ kable(a, "latex", booktabs=T)%>%
 
 
 \newpage
-#Predicting suicide attempts from measures related to protective factors and risk factors:
+# Predicting suicide attempts from measures related to protective factors and risk factors:
 
 Use decision trees to classify each observation as either "suicide attempt" or "no attempt" from measures related to protective factors and risk factors: 
 
@@ -1042,7 +1042,7 @@ Use decision trees to classify each observation as either "suicide attempt" or "
 * alcohol use disorders total score (AUDIT)
 * if veteran has been exposed to combat 
 
-##Data Pre-Processing
+## Data Pre-Processing
 ```{r fig.width=3, fig.height=3, fig.align='center', warning=FALSE}
 #gather variables of interest 
 combat_var <- osb_gen[,c('Study_ID','Combat','Suicide_attempt')]
@@ -1075,9 +1075,9 @@ names(msri_combat) <- c('Study_ID','Family_Connectedness',
 ```
 
 
-##Predicting suicide attempts from protective and risk factors:
+## Predicting suicide attempts from protective and risk factors:
 
-###Further Decision Tree Parameters:
+### Further Decision Tree Parameters:
 
 Beyond choosing a method (such as information gain or gini split), we can change other parameters to control how our decision tree is constructed. For instance, the complexity parameter, or cp, helps to control the size of our tree. It is defined by [\textcolor{blue}{learnbymarketing}](http://www.learnbymarketing.com/481/decision-tree-flavors-gini-info-gain/) as _the minimum improvement in the model needed at each node_ (see link if you're interested in learning more about the parameters). Here we will create multiple trees with different complexity parameters to compare their results.
 
@@ -1122,7 +1122,7 @@ tree_lowcp.pred = predict(tree_lowcp, newdata=test[,-remove_columns], type='clas
 ```
 
 
-###Evaluating the prediction results
+### Evaluating the prediction results
 ```{r fig.width=3, fig.height=3, fig.align='center', include=TRUE}
 #get a confusion matrix to view the results of the information gain prediction
 x <- confusionMatrix(as.factor(tree_highcp.pred), as.factor(test$Suicide_Attempt))
@@ -1202,7 +1202,7 @@ kable(b, "latex", booktabs=T)%>%
 \newpage
  
 
-##Improving Predictive Power: Random Forests
+## Improving Predictive Power: Random Forests
 While decision trees are helpful, we can gain even more predictive power by combining the results of many decision trees in what is called a _random forest_.
 
 From _Towards Data Science_: 
@@ -1257,7 +1257,7 @@ kable(x$table, "latex", booktabs=T)%>%
   row_spec(0,bold=FALSE) %>% 
   kable_styling(latex_options="hold_position",font_size = 10)
 ```
-##Conclusion 
+## Conclusion 
 
 The best way to improve predictive power is not only to construct a random forest full of decision trees, but to tune the forest's hyperparameters such as the number of trees in the forest, the complexity of the trees, and the features used in the model. Keep in mind that these outcomes depend on many factors such as
 
@@ -1270,9 +1270,9 @@ The best way to improve predictive power is not only to construct a random fores
 
 \newpage
 
-#Further Hypothesis Testing:
+# Further Hypothesis Testing:
 
-##Hypothesis: Scores on the problematic drinking (AUDIT) scale and the Family Connectedness scale will predict scores on the Beck Scale for Suicide Ideation (BSSI) for each group separately.
+## Hypothesis: Scores on the problematic drinking (AUDIT) scale and the Family Connectedness scale will predict scores on the Beck Scale for Suicide Ideation (BSSI) for each group separately.
 ```{r}
 
 ms3 <- MSRI[,c("Study_ID","MSRIfam")]
