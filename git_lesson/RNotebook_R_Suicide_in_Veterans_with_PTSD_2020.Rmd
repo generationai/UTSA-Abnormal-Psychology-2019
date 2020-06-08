@@ -48,9 +48,9 @@ require(psych)
 require(rpart)
 require(rpart.plot)
 require(caTools)
-library(caret)
-library(e1071)
-library(randomForest)
+require(caret)
+require(e1071)
+require(randomForest)
 
 #setting our default options for how code chunks will appear
 knitr::opts_chunk$set(error = FALSE,     # suppress errors
@@ -71,9 +71,9 @@ For example, we will pull out each variable relating to _The Alcohol Use Disorde
 ```{r echo = TRUE, warning=FALSE, message=FALSE}
 #reading in the data: 
 #note: set the file path to point wherever the data set of interest is stored
-osmanB <- read.csv(file="osmanB.csv",
+osmanB <- read.csv(file="../git_data/osmanB.csv",
                    stringsAsFactors=FALSE, header = TRUE)
-osmanB_cats <- read.csv(file="osmanB_cats.csv",
+osmanB_cats <- read.csv(file="../git_data/osmanB_cats.csv",
                         stringsAsFactors=FALSE, header = FALSE)
 
 #creating a function to separate data based on category.
@@ -567,7 +567,7 @@ What other relationships might exist?
 **Concept:** Classify a categorical response based from predictor variables using decision trees. The structure of a decision tree can be seen in this example from Analytics Vidhya:
 
 
-![Decision Tree Example](/Users/ssilva/Desktop/genAI/dec_tree_ex2.png)\
+![Decision Tree Example](../git_data/dec_tree_ex2.png)\
 
 * Example from [\textcolor{blue}{Medium: Analytics Vidhya}](https://medium.com/analytics-vidhya/a-guide-to-machine-learning-in-r-for-beginners-decision-trees-c24dfd490abb) 
 \newline
