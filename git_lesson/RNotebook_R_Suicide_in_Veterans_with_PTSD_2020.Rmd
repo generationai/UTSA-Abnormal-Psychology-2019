@@ -73,7 +73,7 @@ For example, we will pull out each variable relating to _The Alcohol Use Disorde
 #note: set the file path to point wherever the data set of interest is stored
 osmanB <- read.csv(file="../git_data/osmanB.csv",
                    stringsAsFactors=FALSE, header = TRUE)
-osmanB_cats <- read.csv(file="../git_data/osmanB_cats.csv",
+osmanB_cats <- read.csv(file="../git_data/osmanB_cats.csv",fileEncoding="UTF-8-BOM",
                         stringsAsFactors=FALSE, header = FALSE)
 
 #creating a function to separate data based on category.
